@@ -3251,19 +3251,19 @@ input, select, textarea {
 			background-color: #493382;
 		}
 
-		.wrapper.style2 {
+		.wrapper.style3 {
 			background-color: #5052b5;
 		}
 
-		.wrapper.style2-alt {
+		.wrapper.style3-alt {
 			background-color: #3e4094;
 		}
 
-		.wrapper.style3 {
+		.wrapper.style2 {
 			background-color: #b74e91;
 		}
 
-		.wrapper.style3-alt {
+		.wrapper.style2-alt {
 			background-color: #953d75;
 		}
 
@@ -4167,7 +4167,7 @@ input, select, textarea {
 	display: block;
 	position: relative;
 	width: 25em;
-	background-color: #507ab5;
+	background-color: #863669;
 	padding: 8em 5em 5em 5em;
 	text-align: center;
 }
@@ -4179,3 +4179,35 @@ input, select, textarea {
 .pending{
 	background-color: #dfb511;
 }
+
+table {
+    font-size: 16px;
+    width: 90%;
+    table-layout: fixed;
+    }
+
+    .scroll {
+    border: 0;
+    border-collapse: collapse;
+    }    
+    .scroll tr {
+    display: flex;
+    }    
+    .scroll td {
+    flex: 1;
+    }    
+    .scroll thead tr:after {
+    overflow-y: scroll;
+    visibility: hidden;
+    height: 0;
+    }    
+    .scroll thead th {
+    flex: 1;
+    display: block;
+    }    
+    .scroll tbody {
+    display: block;
+
+    overflow-y: auto;
+    height: calc(100vh - 300px );
+    }
