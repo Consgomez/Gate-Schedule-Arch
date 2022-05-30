@@ -21,7 +21,7 @@ app.set('view engine', 'ejs');
 //middleware
 app.use(morgan('dev'));
 app.use(express.urlencoded({extended:false}));
-app.use(cookieParser);
+app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'assets')));
 
