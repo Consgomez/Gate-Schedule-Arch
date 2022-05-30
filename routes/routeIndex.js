@@ -4,6 +4,7 @@ let bcrypt = require('bcrypt');
 let jwt = require('jsonwebtoken');
 
 const Reservation = require('./../models/reservations');
+const User = require('./../models/user');
 
 const router = express();
 
