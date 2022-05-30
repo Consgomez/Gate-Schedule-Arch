@@ -3,7 +3,7 @@ let verify = require('./../middleware/verifyAccess');
 let bcrypt = require('bcrypt');
 let jwt = require('jsonwebtoken');
 
-//modelo de reservación
+const Reservation = require('./../models/reservations');
 
 const router = express();
 
