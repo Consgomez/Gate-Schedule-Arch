@@ -2,7 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const morgan = require('morgan');
-const dotenv = require('cookie-parser');
+const dotenv = require('dotenv');
+let cookieParser = require('cookie-parser');
 
 const mongodb = require('./routes/mongoConnect');
 
@@ -12,7 +13,6 @@ const app = express();
 
 //import routes
 const indexRoutes = require('./routes/routeIndex');
-const cookieParser = require('cookie-parser');
 
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
