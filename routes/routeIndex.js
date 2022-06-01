@@ -109,7 +109,8 @@ router.post('/reservation', verify, async(req, res) => {
     }
 })
 
-router.post('/status/:id', verify, async(req, res) => {
+router.post('/status/:id/:gate/:date/:hour/:aero', verify, async(req, res) => {
+    let gate = req.params.gate
     try{
         let transporter = nodemailer.createTransport({
             host: 'smtp.ethereal.email',
@@ -123,7 +124,8 @@ router.post('/status/:id', verify, async(req, res) => {
             from: "Remitente",
             to: "hugh.greenfelder84@ethereal.email",
             subject: "Confirmación de reserva",
-            texto: "Tu reserva a sido confirmada"
+            text: "Tu reserva a sido confirmada. Tu reserva para la puerta "+gate+" del día "+req.params.date+" a las "+req.params.hour+" horas, con la aerolínea "+req.params.aero+" ha sido confirmada",
+            html: "<h1>Tu reserva a sido confirmada</h1> <p>Tu reserva para la puerta "+gate+" del día "+req.params.date+" a las "+req.params.hour+" horas, con la aerolínea "+req.params.aero+" ha sido confirmada</p>"
         }
 
         transporter.sendMail(mailOptions, async(err, info) => {

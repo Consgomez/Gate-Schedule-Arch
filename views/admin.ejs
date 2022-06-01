@@ -111,7 +111,7 @@
 													<tr style="height: 40px;" > 
 														<th style="text-align:center;">Gate #</th> 
 														<th style="text-align:center;">Date</th> 
-														<th style="text-align:center;">Date of reservation</th> 
+														<th style="text-align:center;">Time</th> 
 														<th style="text-align:center;">Airline</th> 
 														<th style="text-align:center;">Status</th> 
 														<th style="text-align:center;"></th>
@@ -119,11 +119,11 @@
 												</thead> 
 												<tbody> 
 													<% for(let i = 0; i<reservations.length; i++) { %>
-														<form action="/status/<%=reservations[i]._id%>" method="POST">
+														<form action="/status/<%=reservations[i]._id%>/<%=reservations[i].gate%>/<%=reservations[i].date%>/<%=reservations[i].hour%>/<%=reservations[i].aerolinea%>" method="POST">
 																<tr>
 																	<td style="text-align:center;"><p name="puerta"><%=reservations[i].gate%></p></td> 
 																	<td style="text-align:center;" name="date"><%=reservations[i].date%></td> 
-																	<td style="text-align:center;" name="hour"><%=reservations[i].reservation%></td> 
+																	<td style="text-align:center;" name="hour"><%=reservations[i].hour%></td> 
 																	<td style="text-align:center;" name="aerolinea"><%=reservations[i].aerolinea%></td> 
 																	<td style="text-align:center;" name="estado"><%=reservations[i].status%></td> 
 																	<% if(reservations[i].status == 'pending') { %>
