@@ -87,14 +87,14 @@ router.post('/reservation', verify, async(req, res) => {
         let reservations = await Reservation.find({date: fechaR, gate: puerta})
         if(reservations.length == 0)
         {
-            let reserva = new Reservation({date: fechaR, gate: puerta, hour: tiempo, aerolinea: aerolinea, reservation:fecha})
+            let reserva = new Reservation({date: fechaR, gate: puerta, hour: tiempo, aerolinea: aerolinea, reservation:fecha, user_id: currentUser})
             await reserva.save()
             res.redirect('/')
         } else {
             for(let i=0; i<reservations.length; i++){
                 if(reservations[i].gate != puerta && reservations[i].hour != tiempo){
                     //create & save
-                    let reserva = new Reservation({date: fechaR, gate: puerta, hour: tiempo, aerolinea: aerolinea, reservation:fecha})
+                    let reserva = new Reservation({date: fechaR, gate: puerta, hour: tiempo, aerolinea: aerolinea, reservation:fecha, user_id: currentUser})
                     await reserva.save()
                     res.redirect('/')
                 }
