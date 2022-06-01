@@ -10,7 +10,10 @@ const Admin = require('./../models/admin');
 const router = express();
 
 router.get('/', verify, async(req, res) => {
-    res.render('index');
+    //console.log(req.userId)
+    let reservations = await Reservation.find({user_id: req.userId});
+
+    res.render('index', {reservations});
 })
 
 router.get('/admin', verify, async(req, res) => {
@@ -67,12 +70,13 @@ router.post('/register', async(req, res) => {
     }
 })
 
-router.post('/reservation', async(req, res) => {
+router.post('/reservation', verify, async(req, res) => {
     try{
         let puerta = req.body.puerta
         let fechaR = req.body.fechaRes
         let tiempo = req.body.tiempo
         let aerolinea = req.body.aeroName
+        console.log(req.body.userId)
         //get the date
         let fecha = new Date()
         fecha = fecha.toDateString()
@@ -97,6 +101,21 @@ router.post('/reservation', async(req, res) => {
                 }
             }
         }
+    } catch(err){
+        console.log(err)
+    }
+})
+
+router.post('/status/:id', verify, async(req, res) => {
+    try{
+        // let puerta = req.body.puerta
+        // let fechaR = req.body.date
+        // let tiempo = req.body.hour
+        // let aerolinea = req.body.aerolinea
+        // console.log(req.params)
+        // await Reservation.updateOne({date: fechaR, gate: puerta, hour: tiempo, aerolinea: aerolinea}, {status: 'accepted'})
+        await Reservation.updateOne({_id: req.params.id}, {status: 'Accepted'})
+        res.redirect('/admin')
     } catch(err){
         console.log(err)
     }

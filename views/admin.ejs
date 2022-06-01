@@ -38,7 +38,7 @@
 							<h1>Gate Scheduler</h1>
 							<p>Welcome to administrator view</p>
 							<ul class="actions">
-								<li><a href="#two" class="button scrolly">Make gate reservation</a></li>
+								<li><a href="#two" class="button scrolly">Reservation History</a></li>
 							</ul>
 						</div>
 					</section>
@@ -118,14 +118,20 @@
 												</thead> 
 												<tbody> 
 													<% for(let i = 0; i<reservations.length; i++) { %>
-														<tr>
-															<td style="text-align:center;"><%=reservations[i].gate%></td> 
-															<td style="text-align:center;"><%=reservations[i].date%></td> 
-															<td style="text-align:center;"><%=reservations[i].reservation%></td> 
-															<td style="text-align:center;"><%=reservations[i].aerolinea%></td> 
-															<td style="text-align:center;"><%=reservations[i].status%></td> 
-															<td style="text-align:center;"><button class="btn login-form__btn submit w-50" type="submit">Accept</button></td>
-														</tr>
+														<form action="/status/<%=reservations[i]._id%>" method="POST">
+																<tr>
+																	<td style="text-align:center;"><p name="puerta"><%=reservations[i].gate%></p></td> 
+																	<td style="text-align:center;" name="date"><%=reservations[i].date%></td> 
+																	<td style="text-align:center;" name="hour"><%=reservations[i].reservation%></td> 
+																	<td style="text-align:center;" name="aerolinea"><%=reservations[i].aerolinea%></td> 
+																	<td style="text-align:center;" name="estado"><%=reservations[i].status%></td> 
+																	<% if(reservations[i].status == 'pending') { %>
+																		<td style="text-align:center;"><button class="btn login-form__btn submit w-50" type="submit">Accept</button></td>
+																	<% } else { %>
+																		<td style="text-align:center;"><span class="button primary disabled">Confirmed</span></td>
+																	<% } %>
+																</tr>
+															</form>
 													<% } %>
 												</tbody> 
 											</table> 
