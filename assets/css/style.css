@@ -46,8 +46,8 @@
 
 .booking-form .form-group {
 	position: relative;
-	margin-left: 2rem;
-	margin-right: 2rem;
+	/* margin-left: 2rem;
+	margin-right: 2rem; */
 	padding: 25px;
 	margin-bottom: 0px;
 }
@@ -58,7 +58,7 @@
 	position: absolute;
 	top: 25px;
 	bottom: 0;
-	right: -28px;
+	right: -8px;
 	width: 2px;
 	height: 75px;
 }

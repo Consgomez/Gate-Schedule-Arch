@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const ReservationsSchema = Schema ({
     date: {
-        type: Date,
+        type: String,
         required: true
     },
     gate: {
@@ -15,8 +15,16 @@ const ReservationsSchema = Schema ({
         type: String,
         required: true
     },
+    aerolinea: {
+        type: String,
+        required: true
+    },
+    status: {
+        type: String,
+        default: 'pending'
+    },
     reservation: {
-        type: Date,
+        type: String,
         required: true
     }
 })

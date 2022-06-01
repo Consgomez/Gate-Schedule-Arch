@@ -5,6 +5,7 @@ let jwt = require('jsonwebtoken');
 
 const Reservation = require('./../models/reservations');
 const User = require('./../models/user');
+const Admin = require('./../models/admin');
 
 const router = express();
 
@@ -13,7 +14,9 @@ router.get('/', verify, async(req, res) => {
 })
 
 router.get('/admin', verify, async(req, res) => {
-    res.render('admin');
+    let reservations = await Reservation.find()
+    
+    res.render('admin', {reservations});
 })
 
 router.get('/login', async(req, res) => {
@@ -32,9 +35,9 @@ router.post('/login', async(req, res) => {
     try{
         await bcrypt.compareSync(password, user.password)
 
-        const token = jwt.sign({user_id: user.email}, process.env.SECRET, {expiresIn:"1h"})
+        const token = jwt.sign({user_id: user.email}, process.env.SECRET, {expiresIn:"2h"})
         res.cookie("token", token, {httpOnly:true})
-        res.redirect('/')
+        res.redirect('/');
     } catch(err) {
         res.redirect('/login')
     }
@@ -47,14 +50,44 @@ router.get('/register', async(req, res) => {
 router.post('/register', async(req, res) => {
     const { email, password } = req.body;
 
-    try{
-        const user = new User({email, password});
-        await user.save();
+    const user = await Admin.findOne({email});
 
-        const token = jwt.sign({user_id: user.email}, process.env.SECRET, {expiresIn:"1h"});
-        res.redirect('/login')
+    if(!user) {
+        console.log("No hay usuario")
+    }
+
+    try{
+        await bcrypt.compareSync(password, user.password)
+
+        const token = jwt.sign({user_id: user.email}, process.env.SECRET, {expiresIn:"2h"})
+        res.cookie("token", token, {httpOnly:true})
+        res.redirect('/admin');
+    } catch(err) {
+        res.redirect('/register')
+    }
+})
+
+router.post('/reservation', async(req, res) => {
+    try{
+        let puerta = req.body.puerta
+        let fechaR = req.body.fechaRes
+        let tiempo = req.body.tiempo
+        let aerolinea = req.body.aeroName
+        //check existance
+        let reservations = await Reservation.find({date: fechaR})
+        //console.log(reservations[gate])
+        // if(reservations.gate == puerta && reservations.hour == tiempo){
+        //     console.log("BTS")
+        // }
+        //get the date
+        let fecha = new Date()
+        fecha = fecha.toDateString()
+        //create & save
+        let reserva = new Reservation({date: fechaR, gate: puerta, hour: tiempo, aerolinea: aerolinea, reservation:fecha})
+        await reserva.save()
+        res.redirect('/')
     } catch(err){
-        console.log(err);
+        console.log(err)
     }
 })
 

@@ -51,12 +51,12 @@
 							<div class="container">
 								<div class="row">
 									<div class="booking-form">
-										<form>
+										<form action="/reservation" method="POST">
 											<div class="row no-margin">
 												<div class="col-md-3">
 													<div class="form-group">
 														<span class="form-label">Gate</span>
-															<select class="form-control">
+															<select class="form-control" name="puerta">
 																<option>1</option>
 																<option>2</option>
 																<option>3</option>
@@ -72,30 +72,57 @@
 														<span class="select-arrow"></span>
 													</div>
 												</div>
-												<div class="col-md-6">
+												<div class="col-md-5">
 													<div class="row no-margin">
-														<div class="col-md-5">
+														<div class="col-md-2">
 															<div class="form-group">
 																<span class="form-label">Check In</span>
-																<input class="form-control" type="date" required>
+																<input class="form-control" type="date" name="fechaRes" required>
 															</div>
 														</div>
 														<div class="col-md-2">
 															<div class="form-group">
 																<span class="form-label">Time</span>
-																<select class="form-control">
+																<select class="form-control" name="tiempo">
 																	<option>00:00</option>
 																	<option>01:00</option>
 																	<option>02:00</option>
+																	<option>03:00</option>
+																	<option>04:00</option>
+																	<option>05:00</option>
+																	<option>06:00</option>
+																	<option>07:00</option>
+																	<option>08:00</option>
+																	<option>09:00</option>
+																	<option>10:00</option>
+																	<option>11:00</option>
+																	<option>12:00</option>
+																	<option>13:00</option>
+																	<option>14:00</option>
+																	<option>15:00</option>
+																	<option>16:00</option>
+																	<option>17:00</option>
+																	<option>18:00</option>
+																	<option>19:00</option>
+																	<option>20:00</option>
+																	<option>21:00</option>
+																	<option>22:00</option>
+																	<option>23:00</option>
 																</select>
 																<span class="select-arrow"></span>
+															</div>
+														</div>
+														<div class="col-md-2">
+															<div class="form-group">
+																<span class="form-label">Aerolinea</span>
+																<input type="text" name="aeroName" id="aero-name" value="" placeholder="Aerolinea" />
 															</div>
 														</div>
 													</div>
 												</div>
 												<div class="col-md-3">
 													<div class="form-btn">
-														<button class="submit-btn">Check availability</button>
+														<button class="submit-btn">Make reservation</button>
 													</div>
 												</div>
 											</div>

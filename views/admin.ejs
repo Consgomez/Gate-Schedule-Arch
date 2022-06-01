@@ -117,30 +117,16 @@
 													</tr> 
 												</thead> 
 												<tbody> 
-													<tr> 
-														<td style="text-align:center;">7</td> 
-														<td style="text-align:center;">5/31/2022</td> 
-														<td style="text-align:center;">5/28/2022</td> 
-														<td style="text-align:center;">Volaris</td> 
-														<td style="text-align:center;">Accepted</td> 
-														<td style="text-align:center;"><button class="btn login-form__btn submit w-70" type="submit">Accept</button></td> 
-													</tr> 
-													<tr> 
-														<td style="text-align:center;">9</td> 
-														<td style="text-align:center;">6/1/2022</td> 
-														<td style="text-align:center;">5/28/2022</td> 
-														<td style="text-align:center;">Aeromexico</td> 
-														<td style="text-align:center;">Pending</td> 
-														<td style="text-align:center;"><button class="btn login-form__btn submit w-100" type="submit">Accept</button></td> 
-													</tr> 
-													<tr> 
-														<td style="text-align:center;">13</td> 
-														<td style="text-align:center;">6/12/2022</td> 
-														<td style="text-align:center;">5/28/2022</td> 
-														<td style="text-align:center;">Aeromexico</td> 
-														<td style="text-align:center;">Accepted</td> 
-														<td style="text-align:center;"><button class="btn login-form__btn submit w-100" type="submit">Accept</button></td> 
-													</tr> 
+													<% for(let i = 0; i<reservations.length; i++) { %>
+														<tr>
+															<td style="text-align:center;"><%=reservations[i].gate%></td> 
+															<td style="text-align:center;"><%=reservations[i].date%></td> 
+															<td style="text-align:center;"><%=reservations[i].reservation%></td> 
+															<td style="text-align:center;"><%=reservations[i].aerolinea%></td> 
+															<td style="text-align:center;"><%=reservations[i].status%></td> 
+															<td style="text-align:center;"><button class="btn login-form__btn submit w-50" type="submit">Accept</button></td>
+														</tr>
+													<% } %>
 												</tbody> 
 											</table> 
 										</div> 
