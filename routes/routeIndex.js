@@ -11,7 +11,8 @@ const router = express();
 
 router.get('/', verify, async(req, res) => {
     //console.log(req.userId)
-    let reservations = await Reservation.find({user_id: req.userId});
+    //let reservations = await Reservation.find({user_id: req.userId});
+    let reservations = await Reservation.find();
 
     res.render('index', {reservations});
 })
