@@ -73,19 +73,30 @@ router.post('/reservation', async(req, res) => {
         let fechaR = req.body.fechaRes
         let tiempo = req.body.tiempo
         let aerolinea = req.body.aeroName
-        //check existance
-        let reservations = await Reservation.find({date: fechaR})
-        //console.log(reservations[gate])
-        // if(reservations.gate == puerta && reservations.hour == tiempo){
-        //     console.log("BTS")
-        // }
         //get the date
         let fecha = new Date()
         fecha = fecha.toDateString()
-        //create & save
-        let reserva = new Reservation({date: fechaR, gate: puerta, hour: tiempo, aerolinea: aerolinea, reservation:fecha})
-        await reserva.save()
-        res.redirect('/')
+        //check existance
+        let reservations = await Reservation.find({date: fechaR, gate: puerta})
+        if(reservations.length == 0)
+        {
+            let reserva = new Reservation({date: fechaR, gate: puerta, hour: tiempo, aerolinea: aerolinea, reservation:fecha})
+            await reserva.save()
+            res.redirect('/')
+        } else {
+            for(let i=0; i<reservations.length; i++){
+                if(reservations[i].gate != puerta && reservations[i].hour != tiempo){
+                    //create & save
+                    let reserva = new Reservation({date: fechaR, gate: puerta, hour: tiempo, aerolinea: aerolinea, reservation:fecha})
+                    await reserva.save()
+                    res.redirect('/')
+                }
+                else {
+                    res.sendStatus(500);
+                    return;
+                }
+            }
+        }
     } catch(err){
         console.log(err)
     }
