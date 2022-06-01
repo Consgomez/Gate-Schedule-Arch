@@ -1,4 +1,5 @@
 const express = require('express');
+let nodemailer = require("nodemailer");
 let verify = require('./../middleware/verifyAccess');
 let bcrypt = require('bcrypt');
 let jwt = require('jsonwebtoken');
@@ -8,6 +9,20 @@ const User = require('./../models/user');
 const Admin = require('./../models/admin');
 
 const router = express();
+
+// function sendEmail ( _name, _email, _subject, _message) {
+//     mandrill('/messages/send', {
+//         message: {
+//             to: [{email: _email , name: _name}],
+//             from_email: 'noreply@yourdomain.com',
+//             subject: _subject,
+//             text: _message
+//         }
+//     }, function(error, response){
+//         if (error) console.log( error );
+//         else console.log(response);
+//     });
+// }
 
 router.get('/', verify, async(req, res) => {
     //console.log(req.userId)
@@ -109,14 +124,31 @@ router.post('/reservation', verify, async(req, res) => {
 
 router.post('/status/:id', verify, async(req, res) => {
     try{
-        // let puerta = req.body.puerta
-        // let fechaR = req.body.date
-        // let tiempo = req.body.hour
-        // let aerolinea = req.body.aerolinea
-        // console.log(req.params)
-        // await Reservation.updateOne({date: fechaR, gate: puerta, hour: tiempo, aerolinea: aerolinea}, {status: 'accepted'})
-        await Reservation.updateOne({_id: req.params.id}, {status: 'Accepted'})
-        res.redirect('/admin')
+        let transporter = nodemailer.createTransport({
+            host: 'smtp.ethereal.email',
+            port: 587,
+            auth: {
+                user: 'hugh.greenfelder84@ethereal.email',
+                pass: 'dv4YuBB15wS6YGgXee'
+            }
+        });
+        let mailOptions = {
+            from: "Remitente",
+            to: "hugh.greenfelder84@ethereal.email",
+            subject: "Confirmación de reserva",
+            texto: "Tu reserva a sido confirmada"
+        }
+
+        transporter.sendMail(mailOptions, async(err, info) => {
+            if(err){
+                res.status(500).send(err.message);
+            }else{
+                console.log("Email enviado")
+                console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+                await Reservation.updateOne({_id: req.params.id}, {status: 'Accepted'})
+                res.redirect('/admin')
+            }
+        })
     } catch(err){
         console.log(err)
     }
