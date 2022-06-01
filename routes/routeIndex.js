@@ -10,24 +10,10 @@ const Admin = require('./../models/admin');
 
 const router = express();
 
-// function sendEmail ( _name, _email, _subject, _message) {
-//     mandrill('/messages/send', {
-//         message: {
-//             to: [{email: _email , name: _name}],
-//             from_email: 'noreply@yourdomain.com',
-//             subject: _subject,
-//             text: _message
-//         }
-//     }, function(error, response){
-//         if (error) console.log( error );
-//         else console.log(response);
-//     });
-// }
+let currentUser = null;
 
 router.get('/', verify, async(req, res) => {
-    //console.log(req.userId)
-    //let reservations = await Reservation.find({user_id: req.userId});
-    let reservations = await Reservation.find();
+    let reservations = await Reservation.find({user_id: currentUser});
 
     res.render('index', {reservations});
 })
@@ -46,6 +32,7 @@ router.post('/login', async(req, res) => {
     const {email, password} = req.body;
 
     const user = await User.findOne({email});
+    currentUser = email;
 
     if(!user) {
         console.log("No hay usuario")
@@ -78,7 +65,7 @@ router.post('/register', async(req, res) => {
     try{
         await bcrypt.compareSync(password, user.password)
 
-        const token = jwt.sign({user_id: user.email}, process.env.SECRET, {expiresIn:"2h"})
+        const token = jwt.sign({user_id: user.email}, process.env.SECRET, {expiresIn:"1h"})
         res.cookie("token", token, {httpOnly:true})
         res.redirect('/admin');
     } catch(err) {
